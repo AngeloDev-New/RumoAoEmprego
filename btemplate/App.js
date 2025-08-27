@@ -3,10 +3,14 @@ import { View} from "react-native";
 class App extends Component{
   render(){
     return (
-      <View style={{flex:1,backgroundColor:'#222'}}>
-      <View style={{height:65,backgroundColor:'#222'}}></View>
-      <View style={{flex:1,backgroundColor:'#777171ff'}}></View>
-      <View style={{height:65,backgroundColor:'#222'}}></View>
+      <View style={{flex:1,backgroundColor:'#1f1111ff',
+        flexDirection:'row', //column por padrao
+        justifyContent:'center', //flex-end,flex-start
+        alignItems:'center'
+      }}>
+        <View style={{height:65,width:65,backgroundColor:'#222'}}></View>
+        <View style={{height:65,width:65,backgroundColor:'#777171ff'}}></View>
+        <View style={{height:65,width:65,backgroundColor:'#292020ff'}}></View>
       
       </View>
     );
