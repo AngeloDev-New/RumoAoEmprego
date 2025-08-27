@@ -1,38 +1,17 @@
 import { Component } from "react";
-import { View,Text ,Button,StyleSheet} from "react-native";
+import { View} from "react-native";
 class App extends Component{
-  constructor(props){
-    super(props);
-    this.state={
-      nome:''
-    };
-    this.entrar = this.entrar.bind(this);
-  }
-  entrar(nome){
-    this.setState(
-      {
-        nome:nome
-      }
-    )
-  }
   render(){
     return (
-      <View style={styles.area}>
-        <Button title="entrar" onPress={()=>this.entrar('Angelo')}/>
-        <Text style={[styles.texto,styles.area]}>{this.state.nome}</Text>
+      <View style={{flex:1,backgroundColor:'#222'}}>
+      <View style={{height:65,backgroundColor:'#222'}}></View>
+      <View style={{flex:1,backgroundColor:'#777171ff'}}></View>
+      <View style={{height:65,backgroundColor:'#222'}}></View>
+      
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  area:{
-    marginTop:50
-  },
-  texto:{
-    fontSize:23,
-    color:'red',
-    textAlign:'center'
-  }
-})
+
 export default App
 
