@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { View,Text ,Button} from "react-native";
+import { View,Text ,Button,StyleSheet} from "react-native";
 class App extends Component{
   constructor(props){
     super(props);
@@ -17,16 +17,22 @@ class App extends Component{
   }
   render(){
     return (
-      <View style={{margin:50}}>
+      <View style={styles.area}>
         <Button title="entrar" onPress={()=>this.entrar('Angelo')}/>
-        <Text style={{
-          fontSize:23,
-          color:'red',
-          textAlign:'center'
-        }}>{this.state.nome}</Text>
+        <Text style={[styles.texto,styles.area]}>{this.state.nome}</Text>
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  area:{
+    marginTop:50
+  },
+  texto:{
+    fontSize:23,
+    color:'red',
+    textAlign:'center'
+  }
+})
 export default App
 
