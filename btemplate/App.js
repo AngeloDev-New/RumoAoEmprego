@@ -5,7 +5,7 @@ class App extends Component{
     return (
       <View style={{flex:1,backgroundColor:'#1f1111ff',
         flexDirection:'row', //column por padrao
-        justifyContent:'center', //flex-end,flex-start
+        justifyContent:'space-between', //flex-end,flex-start
         alignItems:'center'
       }}>
         <View style={{height:65,width:65,backgroundColor:'#222'}}></View>
