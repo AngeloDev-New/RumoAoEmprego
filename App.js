@@ -1,48 +1,88 @@
 // classe responsavel por criar componentes
 import {Component} from 'react';
 // componentes padrao usados no app
-import { View,Text,StyleSheet,TextInput,Button } from 'react-native';
+import { View,Text,StyleSheet,Image,TouchableOpacity } from 'react-native';
 // criando componente prprio que herda do componente inportado do proprio react
+const frasesBiscoito = [
+    "",
+    "Grandes oportunidades surgirão em breve.",
+    "A felicidade está nas pequenas coisas do dia a dia.",
+    "Confie no processo, tudo acontece na hora certa.",
+    "Um novo amigo trará boas energias para sua vida.",
+    "A sorte favorece os que persistem.",
+    "Seu esforço logo será recompensado.",
+    "Um encontro inesperado mudará sua semana.",
+    "Você é mais forte do que imagina.",
+    "Grandes conquistas começam com pequenos passos.",
+    "Acredite em si mesmo e nada será impossível.",
+    "Novas portas se abrirão quando você menos esperar.",
+    "A sorte está do seu lado hoje.",
+    "Seja gentil e o universo será gentil com você.",
+    "Alguém pensa em você neste exato momento.",
+    "Você terá uma surpresa agradável em breve.",
+    "Tudo que você precisa já está dentro de você.",
+    "Siga em frente, o melhor ainda está por vir.",
+    "Um sorriso abrirá caminhos inesperados.",
+    "A paciência é o segredo para grandes conquistas.",
+    "Hoje é um bom dia para começar algo novo."
+    ];
+function numeroAleatorio(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+const images={
+    aberto:require('./src/biscoitoAberto.png'),
+    fechado:require('./src/biscoito.png')
+}
 class App extends Component{
-    // criando construtor pra tabalhar com states
-    constructor(props){
-        // passando as props pra classe pai
-        super(props);
-        // definindo variaveis do state
-        this.state = {
-            // variavel nome definida
-            nome:'',
-            input:''
-        };
-        // vinculando metodo a classe burocrassia do js ...da pra usar arrow
-        // this.pagaNome = this.pegaNome.bind(this);
-        this.entrar = this.entrar.bind(this)
-    }
-    // definindo funca
-  
-    entrar(){
-        if (this.state.input.length > 0){
-            this.setState({nome:'Bem vindo: '+this.state.input});
-    
-        }else{
-            this.setState({nome:''})
-        }
 
+    constructor(props){
+        super(props)
+        this.state={
+            randon_num:0,
+            image:images.fechado,
+            textButton:'Quebrar Biscoito',
+            aberto:false,
+
+        }
+       
     }
-    // funcao principal de renderizacao
+    
     render(){
         return (
 
             <View style={styles.container}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Digite seu nome'
-                    underlineColorAndroid='transparent'
-                    onChangeText={(nome)=>{this.setState({input:nome})}}
+                <Image
+                    source={this.state.image}
+                    style = {styles.img}
                 />
-                <Button title='Entrar' onPress={this.entrar}/>
-                <Text style={styles.texto}>{this.state.nome}</Text>
+                <Text style={styles.textoFrase}>{frasesBiscoito[this.state.randon_num]}</Text>
+                <TouchableOpacity style={styles.botao} onPress={()=>{
+                    if (this.state.aberto){
+                        this.setState({
+                            randon_num:0,
+                            image:images.fechado,
+                            textButton:'Quebrar Biscoito', 
+                            aberto:false 
+                        })
+                    }else{
+                        this.setState({
+                            randon_num:numeroAleatorio(0,frasesBiscoito.length),
+                            image:images.aberto,
+                            textButton : '🔄',
+                            aberto:true
+                            })
+
+                    }
+                    }}>
+                    <View style={styles.btnArea
+                    }>
+                        <Text style={styles.btnTexto}>
+                            {this.state.textButton}
+                        </Text>
+                    </View>
+                </TouchableOpacity>
             </View>
+
         );
     }
 
@@ -50,21 +90,39 @@ class App extends Component{
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        alignContent:'center',
-        justifyContent:'center'
+        alignItems:'center',
+        justifyContent:'center',   
     },
-    input:{
-        height:45,
-        borderWidth:1,
-        borderColor:'#222',
-        margin:10,
+    img:{
+        width:250,
+        height:250,
+    },
+    textoFrase:{
         fontSize:20,
-        padding:10,
-    },
-    texto:{
+        color:'#dd7b22',
+        margin:30,
+        fontStyle:'italic',
         textAlign:'center',
-        fontSize:25,
+    },
+    botao:{
+        width:230,
+        height:50,
+        borderWidth:2,
+        borderColor:'#dd7b22',
+        borderRadius:25
+    },
+    btnArea:{
+        flex:1,
+        flexDirection:'row',
+        justifyContent:'center',
+        alignContent:'center',
 
+    },
+    btnTexto:{
+        fontSize:18,
+        fontWeight:'bold',
+        color:'#dd7b22'
     }
+    
 });
 export default App;
