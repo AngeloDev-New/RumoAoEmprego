@@ -11,20 +11,18 @@ class App extends Component{
         // definindo variaveis do state
         this.state = {
             // variavel nome definida
-            nome:''
+            nome:'',
+            input:''
         };
-        this.texto = ''
         // vinculando metodo a classe burocrassia do js ...da pra usar arrow
-        this.pagaNome = this.pegaNome.bind(this);
+        // this.pagaNome = this.pegaNome.bind(this);
         this.entrar = this.entrar.bind(this)
     }
     // definindo funca
-    pegaNome(texto){
-        this.texto = texto
-    }
+  
     entrar(){
-        if (this.texto.length > 0){
-            this.setState({nome:'Bem vindo: '+this.texto});
+        if (this.state.input.length > 0){
+            this.setState({nome:'Bem vindo: '+this.state.input});
     
         }else{
             this.setState({nome:''})
@@ -40,7 +38,7 @@ class App extends Component{
                     style={styles.input}
                     placeholder='Digite seu nome'
                     underlineColorAndroid='transparent'
-                    onChangeText={this.pagaNome}
+                    onChangeText={(nome)=>{this.setState({input:nome})}}
                 />
                 <Button title='Entrar' onPress={this.entrar}/>
                 <Text style={styles.texto}>{this.state.nome}</Text>
