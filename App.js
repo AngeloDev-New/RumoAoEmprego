@@ -1,7 +1,7 @@
 // classe responsavel por criar componentes
 import {Component} from 'react';
 // componentes padrao usados no app
-import { View,Text,StyleSheet,TextInput } from 'react-native';
+import { View,Text,StyleSheet,TextInput,Button } from 'react-native';
 // criando componente prprio que herda do componente inportado do proprio react
 class App extends Component{
     // criando construtor pra tabalhar com states
@@ -11,25 +11,30 @@ class App extends Component{
         // definindo variaveis do state
         this.state = {
             // variavel nome definida
-            nome:'Angelo'
+            nome:''
         };
+        this.texto = ''
         // vinculando metodo a classe burocrassia do js ...da pra usar arrow
         this.pagaNome = this.pegaNome.bind(this);
-
+        this.entrar = this.entrar.bind(this)
     }
     // definindo funca
     pegaNome(texto){
-        if (texto.length > 0){
-            this.setState({nome:'Bem vindo: '+texto});
-
+        this.texto = texto
+    }
+    entrar(){
+        if (this.texto.length > 0){
+            this.setState({nome:'Bem vindo: '+this.texto});
+    
         }else{
             this.setState({nome:''})
         }
+
     }
     // funcao principal de renderizacao
     render(){
         return (
-            
+
             <View style={styles.container}>
                 <TextInput
                     style={styles.input}
@@ -37,6 +42,7 @@ class App extends Component{
                     underlineColorAndroid='transparent'
                     onChangeText={this.pagaNome}
                 />
+                <Button title='Entrar' onPress={this.entrar}/>
                 <Text style={styles.texto}>{this.state.nome}</Text>
             </View>
         );
@@ -46,6 +52,8 @@ class App extends Component{
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        alignContent:'center',
+        justifyContent:'center'
     },
     input:{
         height:45,
@@ -56,7 +64,7 @@ const styles = StyleSheet.create({
         padding:10,
     },
     texto:{
-        textAlign:'right',
+        textAlign:'center',
         fontSize:25,
 
     }
