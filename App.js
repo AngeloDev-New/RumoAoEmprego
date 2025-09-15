@@ -5,7 +5,7 @@ import {
   StyleSheet,
   FlatList
 } from 'react-native'
-
+import Pessoa from './src/Pessoa'
 class App extends Component{
   constructor(props){
     super(props);
@@ -36,27 +36,8 @@ styles = StyleSheet.create({
   container:{
     flex:1,
   },  
-  feed:{
-    color:'#fff',
-    fontSize:20,
-  },
-  feedArea:{
-    backgroundColor : '#222',
-    height:200,
-    marginBottom:15
-  }
+
 });
 
 export default App;
 
-class Pessoa extends Component{
-  render(){
-    return(
-      <View style={styles.feedArea}>
-        <Text style={styles.feed}>Nome:{this.props.data.nome}</Text>
-        <Text style={styles.feed}>idade:{this.props.data.idade}</Text>
-        <Text style={styles.feed}>Email:{this.props.data.email}</Text>
-      </View>
-    );
-  }
-}
