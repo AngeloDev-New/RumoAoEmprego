@@ -9,35 +9,65 @@ import {
   TouchableOpacity
   // Share futuro
 } from 'react-native'
-import { PanGestureHandler ,GestureHandlerRootView} from 'react-native-gesture-handler';
-export default function App(){
-const changePage = (event) => {
-  const dx = event.nativeEvent.translationX;
-  if (dx < -20) {
-    Alert.alert('Deslizou para a esquerda!')
-  } else if (dx > 20) {
-    Alert.alert('Deslizou para a direita!')
-
-  }
-};
-  return (
-    <GestureHandlerRootView>
-     
-      <PanGestureHandler  onHandlerStateChange={(event) => {
-    if (event.nativeEvent.state === State.END) {
-      changePage(event);
+import {Gesture, GestureDetector, GestureHandlerRootView} from 'react-native-gesture-handler';
+import { Button } from 'react-native/types_generated/index';
+class StartupScreen extends Component{
+    
+    pan = Gesture.Pan()
+    .activeOffsetX([-10, 10]) // ignora movimentos pequenos no eixo X
+    .failOffsetY([-5, 5])     // se mover no eixo Y, deixa o scroll da lista passar
+    .onEnd((e) => {
+      if (e.translationX > 50) {
+        this.setState({ screen: 'StartupScreen'});
+      } else if (e.translationX < -50) {
+        
+        this.setState({ screen: 'RecordingList' });
+      }
+    });
+  constructor(props){
+    super(props);
+    this.state = {
+      screen : 'RecordingList',
+      buttonStyle : styles.centralButtonStart,
+      InformationText:'Tap to start'
     }
-  }}>
-        {/* <View style={styles.container}> */}
-          <Galery/>
-        {/* </View> */}
-      </PanGestureHandler>
-    </GestureHandlerRootView>
-  );
-
+  }
+  render(){
+    if (this.state.screen == 'StartupScreen'){
+      return (
+        <GestureHandlerRootView>
+        <GestureDetector gesture={this.pan}>
+        <View style={styles.container}>
+        <View collapsable={false} style={styles.centeredButton}>
+          <TouchableOpacity onPressOut={()=>{
+            if (this.state.screen == 'RecordingList'){return;}
+            else{Alert.alert("Zoon")}
+          }}>
+            <View style={this.state.buttonStyle} >
+              <Text style={styles.centralButtonText}>{this.state.InformationText}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        </View> 
+        </GestureDetector>
+        </GestureHandlerRootView>
+      );
+    }else {
+      if (this.state.screen == 'RecordingList'){
+        return(
+        <GestureHandlerRootView>
+        <GestureDetector gesture={this.pan}>
+            <View collapsable={false} style={styles.container}>
+              <RecordingList/>
+            </View>
+        </GestureDetector>
+        </GestureHandlerRootView>);
+      } 
+    }
+  }
 }
 
-class Galery extends Component{
+class RecordingList extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -82,12 +112,30 @@ const styles = StyleSheet.create({
     backgroundColor: '#222',
     flex: 1,
   },
-  centralButton:{
-    height:50,
-    width:50,
-    backgroundColor:'#ff0000ff',
-    borderRadius:50,
-  },
+centralButtonStart: {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: [
+    { translateX: -50 }, // metade do width
+    { translateY: -50 }  // metade do height
+  ],
+  height: 100,
+  width: 100,
+  backgroundColor: '#ff0000', // vermelho
+  borderRadius: 50,           // metade da largura
+  borderWidth: 5,
+  borderColor: '#fff',        // borda branca
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+centralButtonText: {
+  color: '#fff',
+  fontSize: 12,
+  fontWeight: 'bold',
+  textAlign: 'center',
+},
   galleryContainer: {
     backgroundColor: '#333', // Cor diferente para distinguir
     flex: 1,
@@ -96,14 +144,14 @@ const styles = StyleSheet.create({
   fullTouchArea: {
   },
   centeredButton: {
+    // backgroundColor:'#222',
+    position:'absolute',
+    
+    top:'50%',
     flex: 1,
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#555555',
-    paddingHorizontal: 40,
-    paddingVertical: 20,
-    borderRadius: 10,
+    width:'100%',
+
   },
   recText: {
     color: '#fff',
@@ -192,5 +240,6 @@ class CardList extends Component{
     );
   }
 }
+export default StartupScreen;
 
 
